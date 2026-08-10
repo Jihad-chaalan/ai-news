@@ -1,0 +1,1 @@
+# abstract generate(prompt, response_model)

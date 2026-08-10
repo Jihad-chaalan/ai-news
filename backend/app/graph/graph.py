@@ -1,0 +1,1 @@
+# build_graph() – wires nodes + conditional edges

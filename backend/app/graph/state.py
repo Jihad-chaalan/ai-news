@@ -1,0 +1,1 @@
+# NewsState TypedDict (explicit typed state)

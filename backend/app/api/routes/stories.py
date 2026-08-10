@@ -1,0 +1,1 @@
+# GET /stories/{id}

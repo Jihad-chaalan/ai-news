@@ -1,0 +1,1 @@
+# abstract generate_image(prompt)

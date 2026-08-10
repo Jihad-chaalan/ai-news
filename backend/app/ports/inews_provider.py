@@ -1,0 +1,1 @@
+# abstract search(query, date_range, limit)

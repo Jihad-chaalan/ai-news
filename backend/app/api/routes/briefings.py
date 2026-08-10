@@ -1,0 +1,1 @@
+# GET /briefings/today, /briefings/{date}
