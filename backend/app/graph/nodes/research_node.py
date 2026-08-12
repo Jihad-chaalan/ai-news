@@ -1,21 +1,27 @@
 import asyncio
 import logging
 from typing import List
-from app.models.article import Article
-from app.ports.inews_provider import INewsProvider
+
 from app.adapters.news.apitube_provider import APITubeProvider
 from app.adapters.news.newsdata_provider import NewsDataProvider
 from app.config import settings
+from app.models.article import Article
+from app.ports.inews_provider import INewsProvider
 from app.graph.state import NewsState
 
 logger = logging.getLogger(__name__)
 
 
 async def research_node(state: NewsState) -> NewsState:
+    """
+    LangGraph node that fetches articles from all enabled news providers in parallel.
+    """
+    # Map provider names to classes
     provider_map = {
         "apitube": APITubeProvider,
         "newsdata": NewsDataProvider,
     }
+
     providers: List[INewsProvider] = []
     for name in settings.ENABLED_NEWS_PROVIDERS:
         if name in provider_map:
@@ -26,6 +32,7 @@ async def research_node(state: NewsState) -> NewsState:
     if not providers:
         raise RuntimeError("No news providers enabled.")
 
+    # Run all providers concurrently
     tasks = [
         provider.search(
             query=settings.NEWS_QUERY,
@@ -42,12 +49,12 @@ async def research_node(state: NewsState) -> NewsState:
         provider_name = providers[idx].__class__.__name__
         if isinstance(result, Exception):
             logger.error(f"Provider {provider_name} failed: {result}")
-            state["errors"].append(f"{provider_name}: {str(result)}")
+            state.setdefault("errors", []).append(f"{provider_name}: {str(result)}")
         else:
             all_articles.extend(result)
             logger.info(f"Provider {provider_name} returned {len(result)} articles")
 
-    # Deduplicate by ID within raw list
+    # Deduplicate by exact ID (same article from the same provider)
     seen = set()
     unique = []
     for article in all_articles:
