@@ -28,6 +28,7 @@ app/domain/value_objects.py
 app/graph/__init__.py
 app/graph/graph.py
 app/graph/state.py
+app/graph/nodes/deduplication_node.py
 app/graph/nodes/research_node.py
 app/models/article.py
 app/ports/__init__.py
