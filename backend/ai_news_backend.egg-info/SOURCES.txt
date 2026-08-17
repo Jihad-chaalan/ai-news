@@ -7,6 +7,7 @@ ai_news_backend.egg-info/top_level.txt
 app/config.py
 app/main.py
 app/adapters/__init__.py
+app/adapters/llm/groq_provider.py
 app/adapters/news/__init__.py
 app/adapters/news/apitube_provider.py
 app/adapters/news/newsdata_provider.py
@@ -29,8 +30,10 @@ app/graph/__init__.py
 app/graph/graph.py
 app/graph/state.py
 app/graph/nodes/deduplication_node.py
+app/graph/nodes/ranking_node.py
 app/graph/nodes/research_node.py
 app/models/article.py
+app/models/story_score.py
 app/ports/__init__.py
 app/ports/iimage_provider.py
 app/ports/illm_provider.py

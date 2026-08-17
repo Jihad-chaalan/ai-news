@@ -10,9 +10,9 @@ class Settings(BaseSettings):
     SUPABASE_URL: str = ""
     SUPABASE_KEY: str = ""
 
-    # LLM (will add later)
-    LLM_API_KEY: str = ""
-    LLM_PROVIDER: str = "openai"
+    # LLM 
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "openai/gpt-oss-120b" 
 
     # News
     APITUBE_API_KEY: str = ""
