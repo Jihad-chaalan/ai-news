@@ -13,3 +13,5 @@ class NewsState(TypedDict, total=False):
     retry_counts: Dict[str, int]
     final_briefing: Dict[str, Any]
     errors: List[str]
+    pending_stories: List[Dict[str, Any]]    # stories being processed (initially selected_stories)
+    validated_stories: List[Dict[str, Any]]  # stories that passed validation
