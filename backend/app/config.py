@@ -28,6 +28,11 @@ class Settings(BaseSettings):
     TELEGRAM_BOT_TOKEN: str = ""
     TELEGRAM_CHAT_ID: str = ""
 
+    #Image LLM
+    CLOUDFLARE_ACCOUNT_ID: str = ""
+    CLOUDFLARE_API_TOKEN: str = ""
+    CLOUDFLARE_MODEL: str = "@cf/stabilityai/stable-diffusion-xl-base-1.0"
+
 
     class Config:
         env_file = ".env"

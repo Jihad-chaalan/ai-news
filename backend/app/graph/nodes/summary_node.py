@@ -46,7 +46,7 @@ async def summary_node(state: dict) -> dict:
         try:
             prompt = build_summary_prompt(story)
             summary = await llm.generate_structured(
-                prompt, StorySummary, temperature=0.5, max_tokens=1024   # increased
+                prompt, StorySummary, temperature=0.5, max_tokens=2048
             )
             story["summary"] = summary.model_dump()
             story["summary_error"] = None

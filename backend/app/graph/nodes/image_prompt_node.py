@@ -37,7 +37,7 @@ async def image_prompt_node(state: dict) -> dict:
         try:
             prompt = build_image_prompt_prompt(story)
             image_prompt = await llm.generate_structured(
-                prompt, ImagePrompt, temperature=0.7, max_tokens=512   # increased
+                prompt, ImagePrompt, temperature=0.7, max_tokens=1024
             )
             story["image_prompt"] = image_prompt.prompt
             story["prompt_error"] = None
