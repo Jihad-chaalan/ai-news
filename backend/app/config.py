@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     # Supabase
     SUPABASE_URL: str = ""
     SUPABASE_KEY: str = ""
+    SUPABASE_BUCKET: str = "ai-news-images"
 
     # LLM 
     GROQ_API_KEY: str = ""

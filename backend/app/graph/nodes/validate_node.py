@@ -1,9 +1,7 @@
 import logging
-import os
 
 logger = logging.getLogger(__name__)
 MAX_RETRIES = 3
-
 
 async def validate_node(state: dict) -> dict:
     pending = state.get("pending_stories", [])
@@ -20,7 +18,7 @@ async def validate_node(state: dict) -> dict:
 
         summary = story.get("summary")
         image_prompt = story.get("image_prompt")
-        image_path = story.get("image_path")          # <-- new check
+        image_url = story.get("image_url")   # <-- now checking URL
         errors = []
 
         # Validate summary
@@ -38,12 +36,12 @@ async def validate_node(state: dict) -> dict:
         if not image_prompt or len(image_prompt) < 10:
             errors.append("Image prompt missing or too short")
 
-        # ---- NEW: Validate image exists ----
-        if not image_path:
-            errors.append("Image generation failed – no image path")
-        elif not os.path.exists(image_path):
-            errors.append(f"Image file missing: {image_path}")
-        # -----------------------------------
+        # ---- Validate image URL (Supabase) ----
+        if not image_url:
+            errors.append("Image not uploaded to Supabase")
+        elif not image_url.startswith("https://"):
+            errors.append("Invalid image URL")
+        # --------------------------------------
 
         if errors:
             story["validation_errors"] = errors
@@ -52,7 +50,7 @@ async def validate_node(state: dict) -> dict:
                 # Clear the generated data so they are regenerated on retry
                 story.pop("summary", None)
                 story.pop("image_prompt", None)
-                story.pop("image_path", None)
+                story.pop("image_url", None)   # also clear URL
                 failed.append(story)
             else:
                 logger.error(f"Story '{story.get('title', '')[:40]}...' failed after {MAX_RETRIES} retries. Discarding.")

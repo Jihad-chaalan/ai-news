@@ -1,7 +1,4 @@
 import logging
-import base64
-import httpx
-import urllib.parse
 from typing import List, Optional
 from app.ports.iimage_generation_provider import IImageGenerationProvider
 from app.adapters.image.cloudflare_provider import CloudflareImageProvider
@@ -18,6 +15,9 @@ class ImageGenerationService:
         ]
 
     async def generate_image(self, prompt: str) -> Optional[bytes]:
+        """
+        Try each provider in order and return image bytes if successful.
+        """
         for idx, provider in enumerate(self.providers):
             try:
                 logger.info(f"Trying image provider {idx+1}/{len(self.providers)}...")
@@ -33,6 +33,7 @@ class ImageGenerationService:
         logger.error("All image providers failed")
         return None
 
+    # Keep this if you still want local saving for debugging, but remove if not needed
     async def generate_and_save_local(self, prompt: str, story_id: str) -> Optional[str]:
         image_data = await self.generate_image(prompt)
         if not image_data:
