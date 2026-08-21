@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     # Telegram
     TELEGRAM_BOT_TOKEN: str = ""
     TELEGRAM_CHAT_ID: str = ""
+    FRONTEND_URL: str = "http://localhost:3000"  
 
     #Image LLM
     CLOUDFLARE_ACCOUNT_ID: str = ""
