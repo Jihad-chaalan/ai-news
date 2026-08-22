@@ -1,86 +1,37 @@
-AI Daily News
-An AI‑powered news aggregator that automatically researches, ranks, summarises, illustrates, and publishes the 6 most important AI news stories every day at 8:00 PM.
+# AI Daily News
 
-Built with LangGraph agentic workflows, FastAPI, Next.js, and Supabase – a portfolio project showcasing advanced AI engineering and modern full‑stack development.
+**AI Daily News** is a fully automated news aggregator that researches, ranks, summarises, illustrates, and publishes the **6 most important AI news stories every day at 8:00 PM**.
 
-Features
-Automated daily research – collects articles from multiple news APIs.
+Built with **LangGraph** agentic workflows, **Next.js**, and **Supabase** – it demonstrates production‑grade AI orchestration, semantic deduplication, LLM‑based ranking, image generation, and multi‑channel publishing.
 
-Semantic deduplication – clusters similar stories using embeddings and cosine similarity.
+> **Current Status**: The backend pipeline (research → dedupe → rank → summarise → image → validate → publish) is complete and working. The Next.js frontend is under active development.
 
-LLM‑based ranking – selects the top 6 most impactful stories.
+---
 
-Multi‑agent generation – creates summaries, “why it matters” blurbs, and editorial image prompts.
+## ✨ Features
 
-Fallback image generation – primary provider (Cloudflare Workers AI) with configurable fallbacks.
+- **Automated daily research** – fetches from multiple news APIs (APITube, NewsData.io).
+- **Semantic deduplication** – groups identical stories using embeddings + cosine similarity.
+- **LLM‑based ranking** – scores stories on impact, novelty, and audience interest using Groq.
+- **AI‑generated summaries** – produces concise summaries, "why it matters", and 3 key points.
+- **Automated illustration** – generates editorial images via Cloudflare Workers AI (with Pollinations.ai fallback).
+- **Supabase storage** – stores final briefings, stories, sources, and generated images.
+- **7‑day retention** – automatically deletes older records and images.
+- **Telegram publishing** – sends each story as a separate, formatted message with clickable sources.
+- **Extensible design** – provider pattern for news APIs, LLMs, and image generators.
 
-Supabase storage – images stored in object storage, metadata in PostgreSQL.
+---
 
-7‑day retention – auto‑cleans older data and images.
+## 🧱 Tech Stack
 
-Dual publishing – updates a Next.js website and sends a daily briefing to Telegram.
-
-Scheduled execution – runs daily without developer intervention.
-
-Tech Stack
-Layer Technology
-Orchestration LangGraph (Python)
-Backend API FastAPI (Python)
-Frontend Next.js, TypeScript, Tailwind CSS
-Database Supabase (PostgreSQL + Storage)
-AI/LLM Configurable (OpenAI, Anthropic, etc.)
-Image Gen Cloudflare Workers AI + fallbacks
-Messaging Telegram Bot API
-Deployment Docker, GitHub Actions
-CI/CD GitHub Actions
-Getting Started
-Prerequisites
-Docker & Docker Compose (recommended)
-
-Or Python 3.11+ and Node.js 20+ for local development
-
-Supabase account (free tier works)
-
-API keys for news/LLM/image providers
-
-Environment Variables
-Copy .env.example to .env and fill in your secrets:
-
-bash
-cp .env.example .env
-Key variables:
-
-DATABASE_URL, SUPABASE_URL, SUPABASE_KEY
-
-LLM_API_KEY (OpenAI/Anthropic)
-
-NEWS*API_KEY*\* (NewsAPI, GNews, etc.)
-
-CLOUDFLARE_API_KEY, CLOUDFLARE_ACCOUNT_ID
-
-TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
-
-FRONTEND_URL
-
-Running with Docker (recommended)
-bash
-docker-compose up --build
-Backend: http://localhost:8000
-
-Frontend: http://localhost:3000
-
-Running locally (development)
-Backend:
-
-bash
-cd backend
-poetry install # or pip install -r requirements.txt
-uvicorn app.main:app --reload
-Frontend:
-
-bash
-cd frontend
-npm install
-npm run dev
-Project Status
-This project is under active development. See the phases plan for the incremental build roadmap.
+| Layer                | Technology                                         |
+| -------------------- | -------------------------------------------------- |
+| **Orchestration**    | LangGraph (Python)                                 |
+| **Backend (Agents)** | Python 3.11+, async, Pydantic                      |
+| **Frontend**         | Next.js 14, TypeScript, Tailwind CSS               |
+| **Database**         | Supabase (PostgreSQL + Storage)                    |
+| **LLM**              | Groq (`openai/gpt-oss-120b`)                       |
+| **Image Generation** | Cloudflare Workers AI + Pollinations.ai (fallback) |
+| **News APIs**        | APITube, NewsData.io                               |
+| **Messaging**        | Telegram Bot API                                   |
+| **Deployment**       | Docker, GitHub Actions (planned)                   |
