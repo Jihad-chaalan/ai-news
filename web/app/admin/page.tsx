@@ -3,6 +3,7 @@ import Link from "next/link";
 import { logout } from "./actions";
 import { Database } from "@/lib/database.types";
 import DeleteButton from "@/components/DeleteButton";
+import Image from "next/image";
 
 type Story = Database["public"]["Tables"]["stories"]["Row"];
 
@@ -36,6 +37,9 @@ export default async function AdminPage() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Image
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Title
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -49,6 +53,21 @@ export default async function AdminPage() {
           <tbody className="bg-white divide-y divide-gray-200">
             {stories.map((story: Story) => (
               <tr key={story.id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {story.image_url ? (
+                    <div className="relative w-12 h-12">
+                      <Image
+                        src={story.image_url}
+                        alt={story.title}
+                        fill
+                        className="object-cover rounded-md"
+                        sizes="48px"
+                      />
+                    </div>
+                  ) : (
+                    <span className="text-gray-400 text-xs">No image</span>
+                  )}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {story.title}
                 </td>
