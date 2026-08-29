@@ -9,9 +9,6 @@ def ensure_str(value):
     return str(value) if value else None
 
 async def publish_node(state: dict) -> dict:
-    """
-    Save validated stories to database and send each story as a separate Telegram message.
-    """
     validated = state.get("validated_stories", [])
     if not validated:
         logger.warning("No stories to publish.")
@@ -19,7 +16,6 @@ async def publish_node(state: dict) -> dict:
         state["publish_status"] = {"db": False, "telegram": False}
         return state
 
-    # Build briefing data
     briefing_data = {
         "date": date.today(),
         "stories": []
@@ -27,15 +23,14 @@ async def publish_node(state: dict) -> dict:
 
     for story in validated:
         ai_summary = story.get("summary", {})
-        # Convert HttpUrl to string for JSON serialization
         image_url = ensure_str(story.get("image_url"))
 
-        # Convert source URLs to strings
         sources = []
         for src in story.get("sources", []):
+            url = ensure_str(src.get("url"))
             sources.append({
-                "url": ensure_str(src.get("url")),
-                "publisher": src.get("publisher", "Unknown"),
+                "url": url,
+                "publisher": url,   # <-- store the full URL directly
                 "published_at": src.get("published_at"),
             })
 
@@ -49,11 +44,9 @@ async def publish_node(state: dict) -> dict:
             "sources": sources
         })
 
-    # Save to database
     repo = SupabaseRepository()
     db_success = await repo.save_briefing(briefing_data)
 
-    # Send to Telegram (one message per story)
     publisher = TelegramPublisher()
     tg_success = await publisher.publish(briefing_data)
 
