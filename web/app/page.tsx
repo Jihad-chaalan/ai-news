@@ -1,11 +1,11 @@
-import { getTodayBriefing } from "@/lib/supabase-queries";
+import {  getLatestBriefing } from "@/lib/supabase-queries";
 import StoryGrid from "@/components/StoryGrid";
 import { Database } from "@/lib/database.types";
 
 type Story = Database["public"]["Tables"]["stories"]["Row"];
 
 export default async function HomePage() {
-  const briefing = await getTodayBriefing();
+  const briefing = await getLatestBriefing();
 
   let stories: Story[] = [];
   let date: string | null = null;
@@ -18,19 +18,10 @@ export default async function HomePage() {
   return (
     <div>
       <section className="text-center py-12">
-        <h1 className="text-4xl font-bold text-gray-900">Today&rsquo;s AI News</h1>
-        {date && (
-          <p className="text-gray-500 mt-2">
-            {new Date(date).toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-        )}
+        <h1 className="text-4xl font-bold text-gray-900">Latest AI News</h1>
+
         <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
-          The 6 most important AI stories, automatically researched and summarised for you.
+          The most important AI stories, automatically researched and summarised by autonomous AI agents.
         </p>
       </section>
 
