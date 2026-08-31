@@ -7,6 +7,7 @@ from app.graph.nodes.image_prompt_node import image_prompt_node
 from app.graph.nodes.generate_images_node import generate_images_node
 from app.graph.nodes.validate_node import validate_node
 from app.graph.nodes.publish_node import publish_node
+from app.graph.nodes.cleanup_node import cleanup_node
 
 from app.graph.state import NewsState
 
@@ -22,7 +23,7 @@ def build_news_graph():
     workflow.add_node("generate_images", generate_images_node)   
     workflow.add_node("validate", validate_node)
     workflow.add_node("publish", publish_node)
-
+    workflow.add_node("cleanup", cleanup_node)
 
     workflow.set_entry_point("research")
     workflow.add_edge("research", "deduplicate")
@@ -31,21 +32,6 @@ def build_news_graph():
     workflow.add_edge("summary", "image_prompt")
     workflow.add_edge("image_prompt", "generate_images")   
     workflow.add_edge("generate_images", "validate")        
-
-    # def route_after_validate(state):
-    #     if state.get("should_retry", False):
-    #         return "summary"
-    #     else:
-    #         return END
-
-    # workflow.add_conditional_edges(
-    #     "validate",
-    #     route_after_validate,
-    #     {
-    #         "summary": "summary",
-    #         END: END
-    #     }
-    # )
 
     # Update the conditional edge from validate
     def route_after_validate(state):
@@ -62,7 +48,9 @@ def build_news_graph():
        }
        ) 
 
-    workflow.add_edge("publish", END)
+    workflow.add_edge("publish", "cleanup")
+    workflow.add_edge("cleanup", END)
+
 
     return workflow.compile()
 
