@@ -24,7 +24,7 @@ export default function Footer() {
               </span>
             </p>
             <a
-              href="#"   // <-- Replace with your actual Telegram group link
+              href="https://t.me/+R6JQYLw8FbNlYmE0"  
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-2 text-blue-600 hover:underline font-medium text-sm"
