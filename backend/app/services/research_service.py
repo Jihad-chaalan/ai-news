@@ -1,1 +1,0 @@
-# uses INewsProvider[] to collect articles
