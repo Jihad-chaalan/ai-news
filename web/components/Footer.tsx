@@ -45,7 +45,16 @@ export default function Footer() {
           {/* Tech stack */}
           <p className="text-sm text-gray-500">
             Built with{" "}
-            <Link
+                        <Link
+              href="https://langchain-ai.github.io/langgraph/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              LangGraph
+            </Link>
+            ,{" "}
+                        <Link
               href="https://nextjs.org"
               target="_blank"
               rel="noopener noreferrer"
@@ -53,23 +62,15 @@ export default function Footer() {
             >
               Next.js
             </Link>
-            ,{" "}
-            <Link
+            
+            , and{" "}
+<Link
               href="https://supabase.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
             >
               Supabase
-            </Link>
-            , and{" "}
-            <Link
-              href="https://langchain-ai.github.io/langgraph/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline font-medium"
-            >
-              LangGraph
             </Link>
           </p>
           <p className="text-xs text-gray-400">
@@ -84,7 +85,7 @@ export default function Footer() {
             <p className="text-sm font-semibold text-gray-900">
               Built as an AI Engineering Project
             </p>
-            <p className="text-sm text-gray-600 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-gray-600 mx-auto mt-1">
               AI Daily News is an independent project exploring how agentic AI can
               automate the complete research-to-publication workflow.
             </p>
