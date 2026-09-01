@@ -43,7 +43,6 @@ jobs:
           CLOUDFLARE_MODEL: ${{ secrets.CLOUDFLARE_MODEL }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
         run: |
           cd backend
           uv run python -m app.main
