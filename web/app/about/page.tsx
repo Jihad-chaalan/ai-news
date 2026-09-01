@@ -7,108 +7,84 @@ export default function AboutPage() {
 
       <div className="prose prose-lg text-gray-700 max-w-none">
         <p className="lead">
-          <strong>AI Daily News</strong> is an automated AI news platform that delivers the{" "}
-          <strong>6 most important AI stories</strong> every day at 8 PM — researched, deduplicated,
-          ranked, summarised, illustrated, and published through an agentic AI pipeline.
+          <strong>AI Daily News</strong> is an AI news platform that gets news through
+          APIs, then filters the most important stories, extracts key points from each
+          using LLMs, and publishes them with original sources – so you can read the
+          full context if you want to explore further.
         </p>
-
-        <p>
-          The goal is simple: keep up with the rapidly changing AI industry without having to read
-          dozens of articles every day.
-        </p>
+                {/* Telegram channel CTA */}
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-md my-6">
+          <p className="text-gray-700 text-base flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#1D9BD9"
+              className="w-5 h-5 flex-shrink-0"
+            >
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+            </svg>
+            <span>
+              <strong>Get the news daily on Telegram.</strong>{" "}
+              Join our channel to receive each story directly on your phone.
+            </span>
+          </p>
+          <a
+            href="#"   // <-- Replace with your actual Telegram group link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-2 text-blue-600 hover:underline font-medium"
+          >
+            Join our Telegram group →
+          </a>
+        </div>
 
         <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">How It Works</h2>
         <ol className="list-decimal pl-6 space-y-2">
           <li>
-            <strong>Research</strong> – Collects AI‑related articles from multiple news providers,
-            including APITube and NewsData.io, using a broad set of AI‑related topics and keywords.
+            <strong>Research</strong> – Fetches articles from multiple news APIs (APITube, NewsData.io)
+            using AI-related keywords.
           </li>
           <li>
-            <strong>Deduplication</strong> – Groups articles covering the same underlying event using
-            semantic embeddings and cosine similarity, allowing multiple sources to be combined into
-            a single story.
+            <strong>Deduplication</strong> – Groups similar articles using semantic embeddings and
+            cosine similarity (so you see only one story per event).
           </li>
           <li>
-            <strong>Ranking</strong> – An LLM evaluates the deduplicated stories based on factors such
-            as impact, technical significance, novelty, and audience interest, selecting the 6 most
-            important stories of the day.
+            <strong>Ranking</strong> – Scores each story on impact, novelty, and audience interest
+            using a large language model (Groq).
           </li>
           <li>
-            <strong>Summarisation</strong> – Generates a concise summary, &quot;why it matters&quot; explanation,
-            and 3 key points for each selected story.
+            <strong>Summarisation</strong> – Generates a concise summary, &quot;why it matters&quot;, and 3 key
+            points for each story.
           </li>
           <li>
-            <strong>Illustration</strong> – Generates an editorial‑style image prompt and creates a
-            unique AI‑generated image using Cloudflare Workers AI, with a fallback image provider
-            when necessary.
+            <strong>Illustration</strong> – Creates an editorial image prompt and generates a unique
+            image using Cloudflare Workers AI (with fallback to Pollinations.ai).
           </li>
           <li>
-            <strong>Validation &amp; Publishing</strong> – A validation stage checks the generated content
-            before it is stored in Supabase and published to the website and Telegram.
+            <strong>Validation &amp; Publishing</strong> – Validates all content, saves to a Supabase
+            database, and sends each story as a separate Telegram message.
           </li>
         </ol>
-
-        <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Agentic Workflow</h2>
-        <p>
-          AI Daily News isn&rsquo;t powered by a single AI call. The workflow is orchestrated using
-          <strong> LangGraph</strong>, with specialised stages responsible for different parts of the
-          pipeline:
-        </p>
-
-        <pre className="bg-gray-100 p-4 rounded-lg text-sm text-gray-700 overflow-x-auto">
-{`Research
-    ↓
-Deduplication
-    ↓
-Ranking
-    ↓
-Top 6 Stories
-    ↓
-┌───────────────┬────────────────┐
-│               │                │
-Summary       Image Prompt       │
-│               ↓                │
-│         Image Generation       │
-└───────────────┴────────────────┘
-                ↓
-           Validation
-                ↓
-            Publishing`}
-        </pre>
-
-        <p>
-          The workflow is designed to handle failures, retries, and fallback providers rather than
-          relying on a single model call.
-        </p>
 
         <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Tech Stack</h2>
         <ul className="list-disc pl-6 space-y-1">
           <li>
-            <strong>AI Orchestration</strong> – LangGraph + Python
+            <strong>Orchestration</strong> – LangGraph (Python agentic workflow)
           </li>
           <li>
-            <strong>Backend API</strong> – FastAPI + Python
+            <strong>Backend API</strong> – FastAPI (Python) – <em>planned</em>
           </li>
           <li>
-            <strong>Frontend</strong> – Next.js, TypeScript, Tailwind CSS
+            <strong>Frontend</strong> – Next.js 14, TypeScript, Tailwind CSS
           </li>
           <li>
-            <strong>Database</strong> – Supabase PostgreSQL
-          </li>
-          <li>
-            <strong>File Storage</strong> – Supabase Storage
+            <strong>Database</strong> – Supabase (PostgreSQL + Storage)
           </li>
           <li>
             <strong>LLM</strong> – Groq (<code>openai/gpt-oss-120b</code>)
           </li>
           <li>
-            <strong>Embeddings</strong> – Semantic embedding model + cosine similarity
-          </li>
-          <li>
-            <strong>News Sources</strong> – APITube + NewsData.io
-          </li>
-          <li>
-            <strong>Image Generation</strong> – Cloudflare Workers AI + fallback provider
+            <strong>Image Generation</strong> – Cloudflare Workers AI + Pollinations.ai (fallback)
           </li>
           <li>
             <strong>Messaging</strong> – Telegram Bot API
@@ -117,67 +93,29 @@ Summary       Image Prompt       │
 
         <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Why This Project?</h2>
         <p>
-          AI Daily News is designed as an end‑to‑end AI engineering project, demonstrating how multiple
-          AI and software components can work together as an automated system.
-        </p>
-        <p>It combines:</p>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>🤖 Agentic AI orchestration</li>
-          <li>🔎 Multi‑source research</li>
-          <li>🔗 Semantic deduplication</li>
-          <li>🧠 LLM‑based ranking</li>
-          <li>✍️ Structured AI summarisation</li>
-          <li>🎨 AI image generation</li>
-          <li>🔄 Fallback and retry mechanisms</li>
-          <li>✅ Content validation</li>
-          <li>📊 Workflow monitoring</li>
-          <li>🗄️ Database and storage management</li>
-          <li>📱 Automated Telegram publishing</li>
-          <li>🌐 Next.js web publishing</li>
-        </ul>
-        <p>
-          The system is built with modular architecture and separation of concerns, making individual
-          providers and components replaceable without redesigning the entire pipeline.
+          This project demonstrates production‑grade AI engineering skills, including agentic
+          orchestration, semantic deduplication, LLM‑based ranking, image generation, multi‑source
+          research, and end‑to‑end automation – all built with clean, modular code following SOLID
+          principles.
         </p>
 
-        <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Daily Automation</h2>
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <ul className="list-disc pl-6 space-y-1 text-sm text-gray-600">
-            <li>
-              <strong>Schedule</strong> — The pipeline automatically runs every day at 8:00 PM UTC.
-            </li>
-            <li>
-              <strong>Pipeline</strong> — News is researched, deduplicated, ranked, summarised,
-              illustrated, validated, and published automatically.
-            </li>
-            <li>
-              <strong>Data Retention</strong> — Only the latest 7 days of news are retained. Older
-              stories and associated assets are automatically removed.
-            </li>
-            <li>
-              <strong>Distribution</strong> — The final daily briefing is published on the website
-              and sent to Telegram.
-            </li>
-          </ul>
+        <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
+          <p className="text-sm text-gray-600">
+            📅 <strong>Daily Schedule</strong> – The pipeline runs automatically every day at 8 PM UTC.
+            <br />
+            🕒 <strong>Data Retention</strong> – Only the last 7 days of news are kept; older records are
+            automatically deleted.
+          </p>
         </div>
 
-        <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200 text-sm text-gray-600">
-          {/* <p>
-            <strong>Built as an AI Engineering Project</strong>
-            <br />
-            AI Daily News is an independent project exploring how agentic AI can automate the complete
-            research‑to‑publication workflow.
-          </p>
-          <p className="mt-2">
-            Built by <strong>Jihad Chaalan</strong>
-          </p> */}
+        <div className="mt-8">
           <Link
             href="https://github.com/Jihad-chaalan/ai-news"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block mt-2 text-blue-600 hover:underline font-medium"
+            className="text-blue-600 hover:underline font-medium"
           >
-            GitHub →
+            View on GitHub →
           </Link>
         </div>
       </div>
