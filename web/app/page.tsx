@@ -2,6 +2,8 @@ import {  getLatestBriefing } from "@/lib/supabase-queries";
 import StoryGrid from "@/components/StoryGrid";
 import { Database } from "@/lib/database.types";
 
+export const revalidate = 60; 
+
 type Story = Database["public"]["Tables"]["stories"]["Row"];
 
 export default async function HomePage() {
