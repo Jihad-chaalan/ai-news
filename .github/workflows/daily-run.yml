@@ -2,7 +2,7 @@ name: Daily AI News Pipeline
 
 on:
   schedule:
-    - cron: "0 17 * * *" # 8 PM Lebanon time (5 PM UTC)
+    - cron: "37 15 * * *" # 3:37 PM UTC
   workflow_dispatch: # allows manual trigger from GitHub UI
 
 jobs:
